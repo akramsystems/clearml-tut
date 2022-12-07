@@ -1,8 +1,11 @@
 import os
 from clearml import Dataset
+from dotenv import load_dotenv
+
+load_dotenv(".env")
+bucket_name = os.environ["bucket_name"]
 
 ds_dir = os.path.join(os.getcwd(), "data/saved_datasets")
-
 
 # Specify which dataset you want to use
 ds = Dataset.get(
