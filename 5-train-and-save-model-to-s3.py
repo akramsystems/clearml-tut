@@ -38,8 +38,7 @@ logger = Logger.current_logger()
 model = tf.keras.models.Sequential(
     [
         tf.keras.layers.Flatten(input_shape=(28, 28)),
-        tf.keras.layers.Dense(params["hidden_layer_dim"], 
-activation="relu"),
+        tf.keras.layers.Dense(params["hidden_layer_dim"], activation="relu"),
         tf.keras.layers.Dropout(0.2),
         tf.keras.layers.Dense(10),
     ]
@@ -48,8 +47,8 @@ loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 model.compile(optimizer="adam", loss=loss_fn, metrics=["accuracy"])
 
 history = model.fit(
-    x_train, y_train, validation_data=(x_test, y_test), 
-epochs=params["epochs"]
+    x_train, y_train, validation_data=(x_test, y_test),
+    epochs=params["epochs"]
 )
 
 scores = model.evaluate(x_test, y_test)
@@ -78,4 +77,3 @@ logger.report_single_value("final_accuracy", scores[1])
 # Save Model
 model.save("model/my_model.h5", save_format="h5")
 # tf.saved_model.save(model, export_dir="model/mnist")
-

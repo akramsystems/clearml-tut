@@ -5,14 +5,14 @@ import pickle
 from dotenv import load_dotenv
 
 load_dotenv(".env")
-bucket_name = os.environ["bucket_name"]
+bucket_name = os.environ["s3_bucket_name"]
 
 ds = Dataset.create(
     dataset_name="secret_dataset",
     dataset_project="dataset project",
     dataset_version="2.0",
     description="do not show this dataset anyone <>_<>",
-    output_uri=f"s3://{bucket_name}/clearml_datasets",
+    output_uri=f"s3://{bucket_name}/clearml-datasets",
 )
 
 # Load and Prepare Dataset

@@ -3,6 +3,11 @@ import pickle
 import keras
 import tensorflow as tf
 from clearml import InputModel, Logger
+import dotenv
+
+dotenv.load_dotenv(".env")
+
+model_id = os.environ["model_id"]
 
 logger = Logger.current_logger()
 
@@ -16,7 +21,7 @@ x_test = secret_dataset["x_test"]
 y_test = secret_dataset["y_test"]
 
 # Load Saved Model
-task_input_model = InputModel("70c1cadb66634740954373c9672c0ae3")
+task_input_model = InputModel(model_id)
 model = keras.models.load_model(task_input_model.get_local_copy())
 
 # Evaluate to Check if it works

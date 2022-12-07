@@ -3,6 +3,11 @@ import clearml
 from clearml import Logger
 import os
 import pickle
+import dotenv
+
+dotenv.load_dotenv()
+
+bucket_name = os.getenv("s3_bucket_name")
 
 # # LOAD DATASET
 ds_dir = os.path.join(os.getcwd(), "data/saved_datasets")
@@ -18,7 +23,8 @@ y_test = secret_dataset["y_test"]
 
 
 task = clearml.Task.init(
-    project_name="Super Secret Project", task_name="Train Black Box Model"
+    project_name="Super-Secret-Project",
+    task_name="Train-Black-Box-Model",
 )
 params = {"epochs": 20, "hidden_layer_dim": 128}
 task.connect(params)
@@ -49,7 +55,8 @@ val_acc = history.history["val_accuracy"]
 val_loss = history.history["val_loss"]
 
 for i, v in enumerate(acc):
-    Logger.current_logger().report_scalar("Accuracy", "Training", iteration=i, value=v)
+    Logger.current_logger().report_scalar(
+        "Accuracy", "Training", iteration=i, value=v)
     Logger.current_logger().report_scalar(
         "Accuracy", "Validation", iteration=i, value=val_acc[i]
     )
@@ -66,3 +73,6 @@ logger.report_single_value("final_accuracy", scores[1])
 # Save Model
 model.save("model/my_model.h5", save_format="h5")
 # tf.saved_model.save(model, export_dir="model/mnist")
+
+# wait for uploads to finish before exiting
+task.flush(wait_for_uploads=True)
