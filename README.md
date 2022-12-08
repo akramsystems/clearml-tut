@@ -5,7 +5,7 @@ This Repository has scripts to help learn how to integrate use ClearML in your m
 #### Requirements
 
 - tensorflow 2.x
-- clearml 1.7.2
+- clearml 1.8.1
 - boto3 # for uploading to s3
 
 ---
